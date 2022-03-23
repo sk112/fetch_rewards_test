@@ -1,5 +1,5 @@
 const express = require('express');
-const { addTransaction, getPayerDetails, spendPoints } = require('./global.js');
+const { addTransaction, getPayerDetails, spendPoints } = require('./impl.js');
 
 const port = 3000;
 const app = express();
