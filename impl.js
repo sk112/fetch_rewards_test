@@ -9,6 +9,7 @@ let payerDetails = {};
 function addTransaction(req, res, next) {
     let body = req.body;
 
+    // #TODO - remove debug - unnecessary endpoint functionality.
     if (body.hasOwnProperty('debug') && body['debug'] == true) {
         let result = {
             total: 0,
@@ -30,8 +31,9 @@ function addTransaction(req, res, next) {
         res.status(200).send(result);
         return;
     }
+    let response = verifyAndPushTransaction(body)
 
-    res.status(200).send(verifyAndPushTransaction(body));
+    response['code'] === 400 ?res.status(400).send(response): res.status(200).send(response)
 }
 
 function verifyAndPushTransaction(body) {
@@ -41,7 +43,8 @@ function verifyAndPushTransaction(body) {
         !body.hasOwnProperty("payer") ||
         !body.hasOwnProperty("timestamp") ||
         !body.hasOwnProperty("points")
-    )
+    )   
+        
         return ({
             code: 400,
             msg: "err: one or more property missing (payer, timestamp, points)",
@@ -60,7 +63,8 @@ function verifyAndPushTransaction(body) {
         return ({
             code: 200,
             msg: "success",
-            item: body
+            item: body,
+            indexData: indexData
         })
     }
 }
@@ -69,11 +73,10 @@ function verifyAndPushTransaction(body) {
 function spendPoints(req, res) {
     let points = req.body["points"];
 
-    let spendDetails = {items: []};
+    let spendDetails = {};
     let index = 0;
-    while (points > 0) {
+    while (points > 0 && indexData.length > 0) {
         let payer = indexData[0];
-
         // Points to spend - Check if the current payer has less points than required points.
         let pointsToSpend = (points > payer["points"])? payer["points"]: points;
         
@@ -87,8 +90,8 @@ function spendPoints(req, res) {
         /* Update points in payerDetails datastore */
         payerDetails[payer["payer"]] -= pointsToSpend;
 
-        // For debugging
-        spendDetails['items'].push([payer['payer'], payer['points'],pointsToSpend])
+        // For debugging - can be commented.
+        // spendDetails['items'].push([payer['payer'], payer['points'],pointsToSpend])
 
         // Delete payers with 0 points. Commenting to keep track of payers and for future payer use.
         // if(payerDetails[payer['payer']] === 0)
@@ -97,8 +100,8 @@ function spendPoints(req, res) {
         // Update points in Indexed Data store.
         indexData[index]["points"] -= pointsToSpend;
 
-        // If points are greater than current payer points, increase the index as current payer is exhausted.
-        if (points >= payer["points"]) {
+        // check to increase the index as current payer is exhausted.
+        if (indexData[index]['points'] === 0) {
             indexData.shift();
         }
         points -= pointsToSpend;
@@ -106,10 +109,9 @@ function spendPoints(req, res) {
 
     // Send with msg if some points cannot be spent due to unavailable balance.
     if (points !== 0) {
-        spendDetails["msg"] =
-            points +
-            " cannot be spent. this may be because of insufficient point balance. Refer to your payer details for more information";
+        spendDetails["Spend Fail"] = points 
     }
+    // spendDetails['index'] = indexData
     res.send(spendDetails);
 }
 
