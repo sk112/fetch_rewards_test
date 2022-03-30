@@ -14,7 +14,7 @@ describe('Null Test cases 0', () => {
           .expect("Content-Type", /json/)
           .expect(200)
           .then((response) => {
-            console.log(response.body)
+            // console.log(response.body)
             expect(response.body)
               .toStrictEqual(response0[i]);
           });
@@ -55,7 +55,7 @@ describe('Test case 1', () => {
           .expect("Content-Type", /json/)
           .expect(200)
           .then((response) => {
-            console.log(response.body)
+            // console.log(response.body)
             expect(response.body)
               .toStrictEqual(response1[i]);
           });
@@ -96,7 +96,7 @@ describe("Test Case 2", () => {
           .expect("Content-Type", /json/)
           .expect(200)
           .then((response) => {
-            console.log(response.body)
+            // console.log(response.body)
             expect(response.body)
               .toStrictEqual(response2[i]);
           });
