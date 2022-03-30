@@ -15,16 +15,16 @@ There are two rules for determining what points to "spend" first:
   
   <pre>
   $ npm start
-  <pre>
+  </pre>
 - To start the server using `nodemon`, run the following command at root
   
   <pre>
   $ nodemon
-  <pre>
+  </pre>
 - To run tests, run the following command at root.
   <pre>
   $ npm test
-  <pre>
+  </pre>
 
 > For any modifications, modify package.json or nodemon.json files for npm and nodemon respectively.
 
@@ -56,9 +56,9 @@ There are two rules for determining what points to "spend" first:
 
 <details open > 
 <summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
-    <b>/add</b>
+    <b>POST /add</b>
 </summary>
-Pushed the record into the database.
+Pushes the record into the database.
 
 <b>API End point</b>
 
@@ -67,9 +67,9 @@ POST http://localhost:9090/add
 
 Request Body Format:
 {
-    "payer": <payer-name>,
-    "points": <points>,
-    "timestamp": <timestamp> [sample format: "2021-03-01T14:00:00Z"]
+    "payer": "[payer-name]",
+    "points": [points],
+    "timestamp": "[timestamp]" [sample format: "2021-03-01T14:00:00Z"]
 }
 </pre>
 
@@ -98,8 +98,9 @@ Response:
  
 <details style="margin-top:5px;">
 <summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
-    <b>/spend</b>
+    <b>POST /spend</b>
 </summary>
+This request calculates the points spent from each payer from the records sorted based on the timestamp.
 <br>
 
 <b>API End point</b>
@@ -108,14 +109,14 @@ POST http://localhost:9090/spend
 
 Request Body Format:
 {
-    "points": <points-to-spend>,
+    "points": [points-to-spend],
 }
 </pre>
 
 <b>Returns</b>
 
 - List of all spent payers along with their points.
-- If the points are insufficient or not available, then `Spend Fail` property will appear in the response [`Spend Fail: <points>`]
+- If the points are insufficient or not available, then `Spend Fail` property will appear in the response [`Spend Fail: [points]`]
 
 <b>Example</b>
 <pre>
@@ -136,8 +137,9 @@ Response:
  
 <details style="margin-top:5px;">
 <summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
-    <b>/balance</b>
+    <b>GET /balance</b>
 </summary>
+Returns the available points from each payer.
 <br>
 
 <b>API End point</b>
@@ -164,7 +166,6 @@ Response:
 </details>
 
 ## Flow
-
 <img src="./FetchRewards.jpeg" />
 
 #### Explanation:
@@ -178,5 +179,11 @@ Response:
 > The `Data` and the `Database` here are just two variables in the implementation.
 
 ## Implementation
-- 
+
+- The `Data` is sorted every time a new record is inserted into the `Database` for record retrieval with low timestamp for `spend` requests.
+- The sort is implemented using Low bound binary Search and Insertion sort approaches.
+- For every record inserted, We get index to insert the record into the `Data` using Low bound binary Search.
+- For `spend` requests, the points are calculated from 0 index, every time all points are used, the 0th record in the `Data` is deleted and every record in the right of 0 index will shift right. 
+  > This may cause performance complexity since shifting records every time is expensive. to avoid this heap trees can be used which reduces the  complexity from O(n) to O(logn) for delete operation.
+
 ---
