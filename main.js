@@ -1,7 +1,6 @@
 const express = require('express');
 const { addTransaction, getPayerDetails, spendPoints } = require('./impl.js');
 
-const port = 3000;
 const app = express();
 app.use(express.json());
 

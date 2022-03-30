@@ -1,5 +1,13 @@
 # Fetch Reward Test
 
+## Background
+Our users have points in their accounts. Users only see a single balance in their accounts. But for reporting purposes we actually track their points per payer/partner. In our system, each transaction record contains: payer (string), points (integer), timestamp (date).
+
+For earning points it is easy to assign a payer, we know which actions earned the points. And thus which partner should be paying for the points. When a user spends points, they don't know or care which payer the points come from. But, our accounting team does care how the points are spent. 
+
+There are two rules for determining what points to "spend" first:
+- We want the oldest points to be spent first (oldest based on transaction timestamp, not the order they’re received)
+- We want no payer's points to go negative.
 
 ## Execution Steps
 
@@ -50,11 +58,11 @@
 <summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
     <b>/add</b>
 </summary>
-<br>
+Pushed the record into the database.
 
 <b>API End point</b>
 
-```
+<pre>
 POST http://localhost:9090/add
 
 Request Body Format:
@@ -63,7 +71,7 @@ Request Body Format:
     "points": <points>,
     "timestamp": <timestamp> [sample format: "2021-03-01T14:00:00Z"]
 }
-```
+</pre>
 
 <b>Returns</b>
 - The request returns status code `200` and `{code:200, msg: 'success'}` upon successful add operation.
@@ -159,4 +167,16 @@ Response:
 
 <img src="./FetchRewards.jpeg" />
 
+#### Explanation:
+- The Server will listen on 9090 port.
+- There are three end points provided as explained in End points section.
+- Server pushes the record to the `Database` for every `add` request and updates the record in `Data` based on the timestamp.
+- Servers requests data from `Data` for every `spend` and `balance` request.
+- The original data is kept untouched in the Database. all the operations are performed on `Data` object
+- Thus, the `Data` and the `Database` will remain in sync at all times.
+
+> The `Data` and the `Database` here are just two variables in the implementation.
+
+## Implementation
+- 
 ---
