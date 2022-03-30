@@ -4,11 +4,19 @@
 ## Execution Steps
 
 - To start the server using `npm`, run the following command at root
-  `$ npm start`
+  
+  ```
+  $ npm start
+  ```
 - To start the server using `nodemon`, run the following command at root
-  `$ nodemon`
+  
+  ```
+  $ nodemon
+  ```
 - To run tests, run the following command at root.
-  `$ npm test`
+  ```
+  $ npm test
+  ```
 
 > For any modifications, modify package.json or nodemon.json files for npm and nodemon respectively.
 
