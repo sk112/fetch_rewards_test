@@ -126,7 +126,7 @@ Response:
 
 </details>
  
-<details style="margin-top:5px;" open>
+<details style="margin-top:5px;">
 <summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
     <b>/balance</b>
 </summary>
