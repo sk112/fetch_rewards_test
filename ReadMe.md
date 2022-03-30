@@ -13,24 +13,24 @@ There are two rules for determining what points to "spend" first:
 
 - To start the server using `npm`, run the following command at root
   
-  ```
+  <pre>
   $ npm start
-  ```
+  <pre>
 - To start the server using `nodemon`, run the following command at root
   
-  ```
+  <pre>
   $ nodemon
-  ```
+  <pre>
 - To run tests, run the following command at root.
-  ```
+  <pre>
   $ npm test
-  ```
+  <pre>
 
 > For any modifications, modify package.json or nodemon.json files for npm and nodemon respectively.
 
 
 ## Files Structure
-```
+<pre>
 .
 +-- index.js 
 +-- main.js
@@ -42,7 +42,7 @@ There are two rules for determining what points to "spend" first:
 +-- package.json
 +-- nodemon.json
 +-- ReadMe.md
-```
+</pre>
 
 **Details**
 - Entry point is `index.js`
@@ -78,7 +78,7 @@ Request Body Format:
 - Returns status code `400` and `{code:200, msg: <error-msg>}` for failures.
 
 <b>Example</b>
-```
+<pre>
 Request:
 POST http://localhost:9090/add
 {
@@ -92,7 +92,7 @@ Response:
   "code": 200,
   "msg": "success"
 }
-```
+</pre>
 
 </details>
  
@@ -103,14 +103,14 @@ Response:
 <br>
 
 <b>API End point</b>
-```
+<pre>
 POST http://localhost:9090/spend
 
 Request Body Format:
 {
     "points": <points-to-spend>,
 }
-```
+</pre>
 
 <b>Returns</b>
 
@@ -118,7 +118,7 @@ Request Body Format:
 - If the points are insufficient or not available, then `Spend Fail` property will appear in the response [`Spend Fail: <points>`]
 
 <b>Example</b>
-```
+<pre>
 Request:
 POST http://localhost:9090/spend
 {
@@ -130,7 +130,7 @@ Response:
     "DANNON1": 200,
     "Spend Fail": 250
 }
-```
+</pre>
 
 </details>
  
@@ -141,9 +141,9 @@ Response:
 <br>
 
 <b>API End point</b>
-```
+<pre>
 GET http://localhost:9090/balance
-```
+</pre>
 
 <b>Returns</b>
 
@@ -151,7 +151,7 @@ GET http://localhost:9090/balance
 - Returns empty list if none of the payers has any points.
 
 <b>Example</b>
-```
+<pre>
 Request:
 GET http://localhost:9090/balance
 
@@ -159,7 +159,7 @@ Response:
 {
   "DANNON1": 200
 }
-```
+</pre>
 
 </details>
 
