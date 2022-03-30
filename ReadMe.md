@@ -47,7 +47,7 @@
 ## End points
 
 <details open > 
-<summary style='border: 2px solid black;padding:5px;border-radius:10px;'>
+<summary style='border: 2px solid rgb(52, 232, 235);padding:5px;border-radius:10px;'>
     <b>/add</b>
 </summary>
 <br>
