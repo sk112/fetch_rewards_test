@@ -1,7 +1,7 @@
 # Fetch Reward Test
----
-## Execution Steps
 
+
+## Execution Steps
 
 - To start the server using `npm`, run the following command at root
   `$ npm start`
@@ -12,7 +12,7 @@
 
 > For any modifications, modify package.json or nodemon.json files for npm and nodemon respectively.
 
----
+
 ## Files Structure
 ```
 .
@@ -35,7 +35,7 @@
 - `test` folder contains the test case related files.
 - `package.json`, `nodemon.js` are configuration files needed for `npm` and `nodemon` respectively.
 
----
+
 ## End points
 
 <details open > 
@@ -147,11 +147,8 @@ Response:
 
 </details>
 
----
 ## Flow
 
 <img src="./FetchRewards.jpeg" />
 
-
 ---
-
